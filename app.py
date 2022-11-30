@@ -13,10 +13,11 @@ user = config("user")
 password = config("password")
 host = config("host")
 database = config("database")
+secret_key = config("SECRET_KEY")
 
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "3ba690099520ffabb4f49adba0769cfac42be0c5"
+app.config["SECRET_KEY"] = "secret_key"
 login_manager = LoginManager()
 login_manager.init_app(app)
 
