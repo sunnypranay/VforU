@@ -9,5 +9,5 @@
 *The application is currently being developed by the following people:*
 - [Pranay Mandadapu](https://www.linkedin.com/in/pranaymandadapu/)
 - [Hari Bharath Mahalingam](https://www.linkedin.com/in/haribharath-mahalingam/)
-- Manjari Kundam
+- [Manjari Kundam](https://www.linkedin.com/in/manjari-kundam-18a980173/)
 - Nicholas Jolley Marn
