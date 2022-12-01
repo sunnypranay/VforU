@@ -23,11 +23,29 @@ def registerTest(data, expected, testNumber):
         print("Expected: {}".format(expected))
         print("Got: {}".format(result["message"]))
 
+def loginTest(data, expected, testNumber):
+    
+    # This is the API endpoint
+    url = "http://127.0.0.1:5000/login"
+
+    # This is the request we will send to the API endpoint
+    response = requests.post(url, json=data)
+
+    # check if the response is same as expected or not
+    result = response.json()
+    # print(result)
+    if result["message"] == expected:
+        print("Test passed {}".format(testNumber))
+    else:
+        print("Test failed {}".format(testNumber))
+        print("Expected: {}".format(expected))
+        print("Got: {}".format(result["message"]))
+
 if __name__ == "__main__":
     # This is the data we will send to the API endpoint
     data = {
     "name": "Pranay",
-    "email": "mpranay2017@gmail.com",
+    "email": "mpranay2018@gmail.com",
     "password": "Pranaysunny",
     "confirm_password": "Pranaysunny",
     "category": "None",
@@ -40,7 +58,7 @@ if __name__ == "__main__":
     # This is the test number
     testNumber = 1
 
-    print("Testing /register/listener API endpoint")
+    print("\nTesting /register/listener API endpoint")
 
     # This is the function to test the API endpoint
     registerTest(data, expected, testNumber)
@@ -73,3 +91,19 @@ if __name__ == "__main__":
     expected = "Password should have atleast one special character"
     testNumber = 6
     registerTest(data, expected, testNumber)
+
+    print("\nTesting /login API endpoint")
+    data = {
+    "email": "mpranay2017@gmail.com",
+    "password": "Pranay@123"
+    }
+
+    expected = "Incorrect password"
+    testNumber = 1
+    loginTest(data, expected, testNumber)
+
+    data["email"] = "mpranay2018@gmail.com"
+
+    expected = "User does not exist"
+    testNumber = 2
+    loginTest(data, expected, testNumber)

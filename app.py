@@ -44,7 +44,7 @@ class IndividualUser:
     def is_authenticated(self):
         conn = mysql.connect(**config)
         cursor = conn.cursor()
-        query = "SELECT * FROM Users WHERE Id = %s"
+        query = "SELECT * FROM Users WHERE UserId = %s"
         cursor.execute(query, (self.id,))
         result = cursor.fetchall()
         conn.close()
@@ -70,7 +70,7 @@ class IndividualUser:
 def get_user(id):
     conn = mysql.connect(**config)
     cursor = conn.cursor()
-    query = "SELECT * FROM Users WHERE Id = %s"
+    query = "SELECT * FROM Users WHERE UserId = %s"
     cursor.execute(query, (id,))
     result = cursor.fetchall()
     conn.close()
@@ -87,9 +87,17 @@ def user_loader(id):
 def unauthorized_handler():
     return redirect(url_for('login'))
 
+
 @app.route('/')
+@login_required
 def index():
     return render_template('index.html')
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
 
 @app.route("/register/<string:role>", methods = ["GET", "POST"])
 def register(role):
@@ -228,6 +236,90 @@ def register(role):
                 status=200,
                 mimetype='application/json'
             )
+
+@app.route("/login", methods = ["GET", "POST"])
+def login():
+    if request.method == "GET":
+        if current_user.is_authenticated:
+            return redirect(url_for('index'))
+        return render_template("login.html")
+    else:
+        # This try block is to check if the data we got is in a vaild format or not
+        # if the data is not in a valid format then we will send a 400 error and appropriate message
+        try:
+            data = request.get_json()
+            email = data["email"]
+            password = data["password"]
+        except:
+            return app.response_class(
+                response=json.dumps({"message": "Invalid data"}),
+                status=400,
+                mimetype='application/json'
+            )
+        
+        # This if block is to check if we got any empty data or not
+        # if we got any empty data then we will send a 400 error and appropriate message
+
+        if email == "" or password == "":
+            return app.response_class(
+                response=json.dumps({"message": "All fields are required"}),
+                status=400,
+                mimetype='application/json'
+            )
+        else:
+            # This try block is to check if the database connection is successful or not
+            # if the connection is not successful then we will send a 500 error and appropriate message
+            try:
+                conn = mysql.connect(**config)
+            except:
+                return app.response_class(
+                    response=json.dumps({"message": "Error connecting to database"}),
+                    status=500,
+                    mimetype='application/json'
+                )
+            
+            # This will check if the email is registered or not
+            # if the email is not registered then we will send a 400 error and appropriate message
+
+            cursor = conn.cursor()
+            query = "SELECT * FROM Users WHERE Email = %s"
+            cursor.execute(query, (email,))
+            result = cursor.fetchall()
+
+            if len(result) == 0:
+                return app.response_class(
+                    response=json.dumps({"message": "User does not exist"}),
+                    status=400,
+                    mimetype='application/json'
+                )
+            else:
+                # This will check if the password is correct or not
+                # if the password is not correct then we will send a 400 error and appropriate message
+
+                if result[0][3] != password:
+                    return app.response_class(
+                        response=json.dumps({"message": "Incorrect password"}),
+                        status=400,
+                        mimetype='application/json'
+                    )
+                else:
+                    # This try block is to check if the data is inserted into the database or not
+                    # if the data is not inserted into the database then we will send a 500 error and appropriate message
+                    try:
+                        user = IndividualUser(result[0][0], result[0][1], result[0][2])
+                        login_user(user)
+                        return app.response_class(
+                            response=json.dumps({"message": "User logged in successfully"}),
+                            status=200,
+                            mimetype='application/json'
+                        )
+                    except:
+                        return app.response_class(
+                            response=json.dumps({"message": "Error While logging user Please try again"}),
+                            status=500,
+                            mimetype='application/json'
+                        )
+
 
 if __name__ == "__main__":
     app.run(debug=True)
