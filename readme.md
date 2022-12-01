@@ -8,6 +8,6 @@
 
 *The application is currently being developed by the following people:*
 - [Pranay Mandadapu](https://www.linkedin.com/in/pranaymandadapu/)
-- Hari Bharath Mahalingam
+- [Hari Bharath Mahalingam](https://www.linkedin.com/in/haribharath-mahalingam/)
 - Manjari Kundam
 - Nicholas Jolley Marn
