@@ -3,9 +3,41 @@
     <title>Login Page</title>
     </head>
     <body>
-        <form action="/login" method="post">
-            <input type="text" name="username" placeholder="Username">
+        <form>
+            <input type="email" name="email" placeholder="email">
             <input type="password" name="password" placeholder="Password">
             <input type="submit" value="Login">
         </form>
+    </body>
+    <script>
+        // This is the client side code
+        // This code will be executed in the browser
+        // The code will be executed when the user clicks the submit button
+        document.querySelector('form').addEventListener('submit', function(e) {
+            // Prevent the default form submit action
+            e.preventDefault();
+            // Get the username and password from the form
+            var email = document.querySelector('input[name="email"]').value;
+            var password = document.querySelector('input[name="password"]').value;
+            // Make a POST request to the server with the username and password
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            }).then(function(response) {
+                // If the response is OK redirect to the home page
+                if (response.ok) {
+                    window.location.href = '/';
+                } else {
+                    // Otherwise display an error message
+                    alert('Invalid username or password');
+                }
+            });
+        });
+    </script>
 </html>
