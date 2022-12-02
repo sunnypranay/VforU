@@ -8,12 +8,14 @@ from flask_login import UserMixin, LoginManager, login_user, login_required, log
 import json
 import mysql.connector as mysql
 from decouple import config
+import openai
 
 user = config("user")
 password = config("password")
 host = config("host")
 database = config("database")
 secret_key = config("SECRET_KEY")
+openaiKey = config("OPENAI_KEY")
 
 
 app = Flask(__name__)
@@ -307,6 +309,7 @@ def login():
                     try:
                         user = IndividualUser(result[0][0], result[0][1], result[0][2])
                         login_user(user)
+                        # strore the user id in the session
                         return app.response_class(
                             response=json.dumps({"message": "User logged in successfully"}),
                             status=200,
@@ -321,12 +324,123 @@ def login():
 
 
 @app.route("/conversation", methods = ["GET", "POST"])
-@login_required
+# @login_required
 def conversation():
     if request.method == "GET":
         return render_template("conversation.html")
     else:
-        return "TODO"
+        # get the current user id from the login session
+        # This post method will get a data from front end which a message form the user 
+        # we have to check if the message is not a empty message then we will insert the message into the database
+        # In the databse we have a table named conversation which has 4 columns
+        # 1. ConversationId - This is the primary key of the table and it is auto incremented
+        # 2. UserId - This is the user id of the user who sent the message which is a foreign key of the table Users
+        # 3. UserMessage - This is a message sent by the user
+        # 4. AIBotMessage - This is a message sent by the AI bot
+        # and we have to generate a string in a format of "Human: {message}\nAI:", and send it to the OpenAI API
+        # and we have to get the response from the OpenAI API and store it in the database and send it to the front end
+        # if the message is empty then we will send a 400 error and appropriate message
+
+        try:
+            data = request.get_json()
+            message = data["message"]
+        except:
+            return app.response_class(
+                response=json.dumps({"message": "Invalid data"}),
+                status=400,
+                mimetype='application/json'
+            )
+        
+        if message == "":
+            return app.response_class(
+                response=json.dumps({"message": "Message cannot be empty"}),
+                status=400,
+                mimetype='application/json'
+            )
+        else:
+            # This try block is to check if the database connection is successful or not
+            # if the connection is not successful then we will send a 500 error and appropriate message
+            try:
+                conn = mysql.connect(**config)
+            except:
+                return app.response_class(
+                    response=json.dumps({"message": "Error connecting to database"}),
+                    status=500,
+                    mimetype='application/json'
+                )
+            
+            # This try block is to check if the data is inserted into the database or not
+            # if the data is not inserted into the database then we will send a 500 error and appropriate message
+            try:
+                cursor = conn.cursor()
+                query = "INSERT INTO conversation (UserId, UserMessage) VALUES (%s, %s)"
+                cursor.execute(query, (current_user.id, message))
+                conn.commit()
+                conn.close()
+            except:
+                return app.response_class(
+                    response=json.dumps({"message": "Error inserting data into database"}),
+                    status=500,
+                    mimetype='application/json'
+                )
+            
+            # This try block is to check if the data is inserted into the database or not
+            # if the data is not inserted into the database then we will send a 500 error and appropriate message
+            try:
+                conn = mysql.connect(**config)
+            except:
+                return app.response_class(
+                    response=json.dumps({"message": "Error connecting to database"}),
+                    status=500,
+                    mimetype='application/json'
+                )
+            
+            # and we have to generate a string in a format of "Human: {message}\nAI:", and send it to the OpenAI API
+            # and we have to get the response from the OpenAI API and store it in the database and send it to the front end
+            # try:
+            conversation = "Human: " + message + "\nAI:"
+            # set the api key
+            openai.api_key = openaiKey
+            start_sequence = "\nAI:"
+            restart_sequence = "\nHuman: "
+
+            response = openai.Completion.create(
+            model="text-curie-001",
+            prompt=conversation,
+            temperature=0.9,
+            max_tokens=150,
+            top_p=1,
+            frequency_penalty=0,
+            presence_penalty=0.6,
+            stop=[" Human:", " AI:"]
+            )
+
+            # get the conversation Id from the database and store it in a variable
+            cursor = conn.cursor()
+            query = "SELECT ConversationId FROM conversation ORDER BY ConversationId DESC LIMIT 1"
+            cursor.execute(query)
+            result = cursor.fetchall()
+            conversationId = result[0][0]
+
+            # now we have to insert the response from the OpenAI API into the database
+            cursor = conn.cursor()
+            query = "UPDATE conversation SET AIBotMessage = %s WHERE ConversationId = %s"
+            cursor.execute(query, (response["choices"][0]["text"], conversationId))
+            conn.commit()
+            conn.close()
+            return app.response_class(
+                response=json.dumps({"message": response["choices"][0]["text"]}),
+                status=200,
+                mimetype='application/json'
+            )
+            # except:
+            #     return app.response_class(
+            #         response=json.dumps({"message": "Error while getting response from OpenAI API"}),
+            #         status=500,
+            #         mimetype='application/json'
+            #     )
+            
+            
 
 
 if __name__ == "__main__":
