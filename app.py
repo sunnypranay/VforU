@@ -89,7 +89,6 @@ def unauthorized_handler():
 
 
 @app.route('/')
-@login_required
 def index():
     return render_template('index.html')
 
@@ -102,7 +101,7 @@ def logout():
 @app.route("/register/<string:role>", methods = ["GET", "POST"])
 def register(role):
     if request.method == "GET":
-        return render_template("register.html")
+        return render_template("signup.html")
     else:
         # This try block is to check if the data we got is in a vaild format or not
         # if the data is not in a valid format then we will send a 400 error and appropriate message
@@ -319,6 +318,15 @@ def login():
                             status=500,
                             mimetype='application/json'
                         )
+
+
+@app.route("/conversation", methods = ["GET", "POST"])
+@login_required
+def conversation():
+    if request.method == "GET":
+        return render_template("conversation.html")
+    else:
+        return "TODO"
 
 
 if __name__ == "__main__":

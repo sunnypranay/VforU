@@ -1,8 +1,84 @@
 <html>
     <head>
-        <title>V For U Home Page</title>
+        <meta charset="UTF-8">
+        <meta name="'viewpoint" content=""width=device-width, initail-scale="1.0">
+        <title>VForU</title>
+        <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='style/style.css') }}"/>
+        <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet">
+    
     </head>
     <body>
-        <h1>TODO Home Page</h1>
+        <nav class="navbar">
+            <div class="navbar__container">
+                <a href="/" id="navbar__logo">VForU</a>
+                <div class="navbar__toggle" id="mobile-menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+
+                </div>
+                <ul class="navbar__menu">
+                    <li class="navbar__item">
+                        <a href="/" class="navbar__links">Home</a>
+                    </li>
+                    <li class="navbar__item">
+                        <a href="/about.html" class="navbar__links">About Us</a>
+                    </li>
+                    <li class="navbar__btn">
+                        <a href="/login.html" class="button">Sign In</a>
+                    </li>
+                    <li class="navbar__btn">
+                        <a href="/signup.html" class="button">Sign Up</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!--content section-->
+        <div class="main">
+            <div class="main__container">
+                <div class="main__content">
+                    <h1> VForU – We are for You. </h1>
+                    <p>Are you suffering from Depression? Anxiety? Suicidal thoughts? Don’t worry. We got you. </p>
+                </div>
+                <div class="main__img--container">
+                    <img src="{{ url_for('static',filename='Images/opinion.svg') }}" alt="image" id="main__img"/>
+                </div>
+            </div>
+        </div>
+
+        <!--Services section-->
+        <div class="services">
+            <h1>What's VForU</h1>
+            <div class="services__container">
+                <div class="services__card">
+                    <h3 class="text">Everyone goes through something that the world doesn’t see.V for U is available 
+                        24*7 to hear your thoughts,</p>
+                    <p class="text">pain, and sorrows. Problems with family, relationships, and society have been arising so much in today’s world. </p>
+                    <p class="text">We understand that not everyone has a companion/partner to vent out completely.  </p>
+                    <p class="text">V for U is a platform for you to connect with listeners who are ready to 
+                        listen to you and be there for you in need. </p>
+                    <p class="text">Our team aims to connect you with people who have been striving to help individuals in their hard times.</p>
+                    <p class="text">All you need to do is join V for U as a member and you will be given the right to choose of speaking with various listeners listed. </p>
+                    <p class="text">Our listeners are experts in listening and handling individuals who need company anytime. You get to choose from categories of </p>
+                    <p class="text">Family, Relationship, and LGBTQ issues. </p>
+                    <p class="text">The steps are simple, </p>
+                    <p class="text">    1.Create an account with us by going to the Sign Up page. </p>
+                    <p class="text">    2.Login with your new credentials. </p>
+                    <p class="text">    3.Find all the available listeners from the three categories stated above.</p> 
+                    <p class="text">    4.Choose the listener you want.</p> 
+                    <p class="text">    5.Start chatting with your listener until you feel you are okay.</p> 
+                </div>
+                <div class="depressionGirl">
+                    <img src="{{ url_for('static',filename='Images/home2.jpg') }}" class="image"/>
+                </div>
+            
+            </div>
+        </div>
+
+
+        <script src="{{ url_for('static',filename='javascript/app.js') }}" ></script>
+
+
     </body>
 </html>
