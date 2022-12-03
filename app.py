@@ -404,6 +404,7 @@ def conversation():
             start_sequence = "\nAI:"
             restart_sequence = "\nHuman: "
 
+            # In emergency situations use text-davinci-003
             response = openai.Completion.create(
             model="text-curie-001",
             prompt=conversation,
@@ -429,7 +430,7 @@ def conversation():
             conn.commit()
             conn.close()
             return app.response_class(
-                response=json.dumps({"message": response["choices"][0]["text"]}),
+                response=json.dumps({"message": response["choices"][0]["text"], "status": "success"}),
                 status=200,
                 mimetype='application/json'
             )
