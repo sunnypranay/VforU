@@ -122,12 +122,12 @@
         margin: 0;
         width: 100%;
         position: absolute;
-        top: -1000px;
-        opacity: 0; 
+        /* top: -1000px;
+        opacity: 0; */
         transition: all 0.5s ease;
         height: 50vh;
         z-index: -1;
-        background: #131313;
+        background: #817676;
     }
     .navbar__menu.active {
         background: #131313;
@@ -415,8 +415,9 @@
     border-radius: 4px;
   }
   .text {
-    float:center;
+    float: center;
     color: #fff;
+    font-size:large;
   }
 
 
@@ -424,7 +425,7 @@
  .bg{
     height: 100%;
     width: 100%;
-    /* background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)),url(./static/images/login.svg); */
+    background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)),url(Images/login.svg);
     background-position: center;
     background-size: cover;
     position: absolute;
@@ -523,3 +524,21 @@ span{
 #register{
     left: 50px;
 }
+
+
+.toggle-btn{
+    padding: 10px 30px;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    outline: none;
+    position: relative
+}
+
+.footer-center { 
+    background: linear-gradient(to right,#ff105f, #ffad06);
+    height: 50px;
+    padding: 20px;
+    text-align: center;
+}
+

@@ -5,10 +5,11 @@
         <meta name="'viewpoint" content=""width=device-width, initail-scale="1.0">
         <title>VForU Sign Up</title>
         <style>
-        .bg{
-            background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)),url({{ url_for('static',filename='Images/login.svg') }});
-        }
-    </style>
+            .bg{
+                background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)),url({{ url_for('static',filename='Images/login.svg') }});
+            }
+        </style>
+
     </head>
     <body>
         <nav class="navbar">
@@ -40,12 +41,13 @@
         <div class="bg">
             <div class="form-box">
                 <div class="social-icons">
-                    <h3>VForU Registration</h3>
+                    <h3>VForU Sign Up</h3>
                 </div>
                 <form id="register" class="input-group">
-                    <input type="text" class="input-field" placeholder="User Id" required>
+                    <input type="text" class="input-field" placeholder="Username" required>
                     <input type="email" class="input-field" placeholder="Email Id" required>                    
-                    <input type="text" class="input-field" placeholder="Enter Password" required>
+                    <input type="password" class="input-field" id = "pswd1" value = "" placeholder="Enter Password" required>
+                    <input type = "password" class="input-field" id = "pswd2" value = "" placeholder="Confirm Password" required>
                     <label for="role">Role:</label>
                     <select name="role" id="role">
 
@@ -53,11 +55,28 @@
                         <option value="User" id="user">User</option>
                     </select>
 
+
                     <input type="checkbox" class="check-box"><span>I agree to the Terms & Conditions</span>
-                    <button type="submit" class="submit-btn">Register</button>
+                    <button type="submit" class="submit-btn" onclick="matchPassword()">Sign Up</button>
                 </form>
             </div>
 
         </div>
+        <script>  
+            function matchPassword() {  
+              const pw1 = document.getElementById("pswd1").value;  
+              const pw2 = document.getElementById("pswd2").value;  
+              if(pw1 == pw2)  
+              {   
+                alert("Password created successfully");
+                return true;
+              } else {  
+                
+                alert("Passwords did not match");
+                return false;  
+              }  
+            }  
+        </script> 
+        
     </body>
 </html>
