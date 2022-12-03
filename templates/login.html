@@ -45,14 +45,45 @@
                 </div>
 
                 <form id="login" class="input-group">
-                    <input type="text" class="input-field" placeholder="User Id" required>
-                    <input type="text" class="input-field" placeholder="Enter Password" required>
-                    <input type="checkbox" class="check-box"><span>Remember Password</span>
-                    <button type="submit" class="submit-btn">Sign In</button>
+                    <input type="email" class="input-field" id = "email" placeholder="Email" required>
+                    <input type="password" class="input-field" id = "password" placeholder="Enter Password" required>
+                    <button  class="submit-btn" onclick="sendData()" >Sign In</button>
+                    <p id = "placeholder"></p>
                 </form>
                 
             </div>
 
         </div>
     </body>
+
+    <script>
+        function sendData(){
+            event.preventDefault();
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            var data = {
+                "email": email,
+                "password": password
+            }
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status == "success"){
+                    window.location.href = "/conversation";
+                }
+                else{
+                    document.getElementById("placeholder").innerHTML = data.message;
+                    document.getElementById("placeholder").style.color = "red";
+                }
+            })
+
+        }
+    </script>
+
 </html>

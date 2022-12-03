@@ -29,10 +29,10 @@
                         <a href="/about.html" class="navbar__links">About Us</a>
                     </li>
                     <li class="navbar__btn">
-                        <a href="/login.html" class="button">Sign In</a>
+                        <a href="/login" class="button">Sign In</a>
                     </li>
                     <li class="navbar__btn">
-                        <a href="/signup.html" class="button">Sign Up</a>
+                        <a href="/register" class="button">Sign Up</a>
                     </li>
                 </ul>
             </div>
@@ -44,38 +44,58 @@
                     <h3>VForU Sign Up</h3>
                 </div>
                 <form id="register" class="input-group">
-                    <input type="text" class="input-field" placeholder="Username" required>
-                    <input type="email" class="input-field" placeholder="Email Id" required>                    
-                    <input type="password" class="input-field" id = "pswd1" value = "" placeholder="Enter Password" required>
+                    <input type="text" class="input-field" id ="name" placeholder="Name" required>
+                    <input type="email" class="input-field" id="email" placeholder="Email Id" autocomplete="off" required>                    
+                    <input type="password" class="input-field" id = "pswd1" value = "" placeholder="Enter Password" autocomplete="off" required>
                     <input type = "password" class="input-field" id = "pswd2" value = "" placeholder="Confirm Password" required>
-                    <label for="role">Role:</label>
-                    <select name="role" id="role">
-
-                        <option value="Listener" id="listener">Listener</option>
-                        <option value="User" id="user">User</option>
-                    </select>
-
-
-                    <input type="checkbox" class="check-box"><span>I agree to the Terms & Conditions</span>
-                    <button type="submit" class="submit-btn" onclick="matchPassword()">Sign Up</button>
+                    <input type="checkbox" class="check-box" id ="check-box"><span>I agree to the Terms & Conditions</span>
+                    <button class="submit-btn" onclick="sendData()">Sign Up</button>
                 </form>
             </div>
 
         </div>
         <script>  
-            function matchPassword() {  
-              const pw1 = document.getElementById("pswd1").value;  
-              const pw2 = document.getElementById("pswd2").value;  
-              if(pw1 == pw2)  
-              {   
-                alert("Password created successfully");
-                return true;
-              } else {  
-                
-                alert("Passwords did not match");
-                return false;  
-              }  
-            }  
+
+        function sendData(){
+            event.preventDefault();
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var pswd1 = document.getElementById("pswd1").value;
+            var pswd2 = document.getElementById("pswd2").value;
+            var check = document.getElementById("check-box").checked;
+            
+                var data = {
+                    "name": name,
+                    "email": email,
+                    "password": pswd1,
+                    "confirm_password": pswd2,
+                    "role": "user",
+                    "category": "Free_Tier"
+                }
+                // use fetch to send data to the server
+                fetch('/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.status == "success"){
+                        alert("Registered Successfully");
+                        window.location.href = "/login";
+                    }
+                    else{
+                        alert(data.message);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+        
+
         </script> 
         
     </body>

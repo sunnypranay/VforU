@@ -100,8 +100,8 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-@app.route("/register/<string:role>", methods = ["GET", "POST"])
-def register(role):
+@app.route("/register", methods = ["GET", "POST"])
+def register():
     if request.method == "GET":
         return render_template("signup.html")
     else:
@@ -117,7 +117,7 @@ def register(role):
             category = data["category"]
         except:
             return app.response_class(
-                response=json.dumps({"message": "Invalid data"}),
+                response=json.dumps({"message": "Invalid data", "status": "error"}),
                 status=400,
                 mimetype='application/json'
             )
@@ -127,7 +127,7 @@ def register(role):
 
         if name == "" or email == "" or password == "" or confirm_password == "" or role == "" or category == "":
             return app.response_class(
-                response=json.dumps({"message": "All fields are required"}),
+                response=json.dumps({"message": "All fields are required", "status": "error"}),
                 status=400,
                 mimetype='application/json'
             )
@@ -137,7 +137,7 @@ def register(role):
 
         elif password != confirm_password:
             return app.response_class(
-                response=json.dumps({"message": "Passwords do not match"}),
+                response=json.dumps({"message": "Passwords do not match", "status": "error"}),
                 status=400,
                 mimetype='application/json'
             )
@@ -151,7 +151,7 @@ def register(role):
                 conn = mysql.connect(**config)
             except:
                 return app.response_class(
-                    response=json.dumps({"message": "Error connecting to database"}),
+                    response=json.dumps({"message": "Error connecting to database", "status": "error"}),
                     status=500,
                     mimetype='application/json'
                 )
@@ -166,7 +166,7 @@ def register(role):
 
             if len(result) > 0:
                 return app.response_class(
-                    response=json.dumps({"message": "User already exists"}),
+                    response=json.dumps({"message": "User already exists", "status": "error"}),
                     status=400,
                     mimetype='application/json'
                 )
@@ -176,7 +176,7 @@ def register(role):
 
                 if len(password) < 8:
                     return app.response_class(
-                        response=json.dumps({"message": "Password should be atleast 8 characters"}),
+                        response=json.dumps({"message": "Password should be atleast 8 characters", "status": "error"}),
                         status=400,
                         mimetype='application/json'
                     )
@@ -185,7 +185,7 @@ def register(role):
 
                 elif not any(char.isupper() for char in password):
                     return app.response_class(
-                        response=json.dumps({"message": "Password should have atleast one uppercase character"}),
+                        response=json.dumps({"message": "Password should have atleast one uppercase character", "status": "error"}),
                         status=400,
                         mimetype='application/json'
                     )
@@ -194,7 +194,7 @@ def register(role):
 
                 elif not any(char.islower() for char in password):
                     return app.response_class(
-                        response=json.dumps({"message": "Password should have atleast one lowercase character"}),
+                        response=json.dumps({"message": "Password should have atleast one lowercase character", "status": "error"}),
                         status=400,
                         mimetype='application/json'
                     )
@@ -204,7 +204,7 @@ def register(role):
 
                 elif not any(char.isdigit() for char in password):
                     return app.response_class(
-                        response=json.dumps({"message": "Password should have atleast one digit"}),
+                        response=json.dumps({"message": "Password should have atleast one digit", "status": "error"}),
                         status=400,
                         mimetype='application/json'
                     )
@@ -213,7 +213,7 @@ def register(role):
 
                 elif not any(not char.isalnum() for char in password):
                     return app.response_class(
-                        response=json.dumps({"message": "Password should have atleast one special character"}),
+                        response=json.dumps({"message": "Password should have atleast one special character", "status": "error"}),
                         status=400,
                         mimetype='application/json'
                     )
@@ -227,13 +227,13 @@ def register(role):
                     conn.close()
                 except:
                     return app.response_class(
-                        response=json.dumps({"message": "Error inserting data into database"}),
+                        response=json.dumps({"message": "Error inserting data into database", "status": "error"}),
                         status=500,
                         mimetype='application/json'
                     )
             
             return app.response_class(
-                response=json.dumps({"message": "User registered successfully"}),
+                response=json.dumps({"message": "User registered successfully", "status": "success"}),
                 status=200,
                 mimetype='application/json'
             )
@@ -242,7 +242,7 @@ def register(role):
 def login():
     if request.method == "GET":
         if current_user.is_authenticated:
-            return redirect(url_for('index'))
+            return redirect(url_for('conversation'))
         return render_template("login.html")
     else:
         # This try block is to check if the data we got is in a vaild format or not
@@ -253,7 +253,7 @@ def login():
             password = data["password"]
         except:
             return app.response_class(
-                response=json.dumps({"message": "Invalid data"}),
+                response=json.dumps({"message": "Invalid data", "status": "error"}),
                 status=400,
                 mimetype='application/json'
             )
@@ -263,7 +263,7 @@ def login():
 
         if email == "" or password == "":
             return app.response_class(
-                response=json.dumps({"message": "All fields are required"}),
+                response=json.dumps({"message": "All fields are required", "status": "error"}),
                 status=400,
                 mimetype='application/json'
             )
@@ -274,7 +274,7 @@ def login():
                 conn = mysql.connect(**config)
             except:
                 return app.response_class(
-                    response=json.dumps({"message": "Error connecting to database"}),
+                    response=json.dumps({"message": "Error connecting to database", "status": "error"}),
                     status=500,
                     mimetype='application/json'
                 )
@@ -289,7 +289,7 @@ def login():
 
             if len(result) == 0:
                 return app.response_class(
-                    response=json.dumps({"message": "User does not exist"}),
+                    response=json.dumps({"message": "User does not exist", "status": "error"}),
                     status=400,
                     mimetype='application/json'
                 )
@@ -299,7 +299,7 @@ def login():
 
                 if result[0][3] != password:
                     return app.response_class(
-                        response=json.dumps({"message": "Incorrect password"}),
+                        response=json.dumps({"message": "Incorrect password", "status": "error"}),
                         status=400,
                         mimetype='application/json'
                     )
@@ -311,20 +311,20 @@ def login():
                         login_user(user)
                         # strore the user id in the session
                         return app.response_class(
-                            response=json.dumps({"message": "User logged in successfully"}),
+                            response=json.dumps({"message": "User logged in successfully", "status": "success"}),
                             status=200,
                             mimetype='application/json'
                         )
                     except:
                         return app.response_class(
-                            response=json.dumps({"message": "Error While logging user Please try again"}),
+                            response=json.dumps({"message": "Error While logging user Please try again", "status": "error"}),
                             status=500,
                             mimetype='application/json'
                         )
 
 
 @app.route("/conversation", methods = ["GET", "POST"])
-# @login_required
+@login_required
 def conversation():
     if request.method == "GET":
         return render_template("conversation.html")
@@ -346,14 +346,14 @@ def conversation():
             message = data["message"]
         except:
             return app.response_class(
-                response=json.dumps({"message": "Invalid data"}),
+                response=json.dumps({"message": "Invalid data", "status": "error"}),
                 status=400,
                 mimetype='application/json'
             )
         
         if message == "":
             return app.response_class(
-                response=json.dumps({"message": "Message cannot be empty"}),
+                response=json.dumps({"message": "Message cannot be empty", "status": "error"}),
                 status=400,
                 mimetype='application/json'
             )
@@ -364,7 +364,7 @@ def conversation():
                 conn = mysql.connect(**config)
             except:
                 return app.response_class(
-                    response=json.dumps({"message": "Error connecting to database"}),
+                    response=json.dumps({"message": "Error connecting to database", "status": "error"}),
                     status=500,
                     mimetype='application/json'
                 )
@@ -379,7 +379,7 @@ def conversation():
                 conn.close()
             except:
                 return app.response_class(
-                    response=json.dumps({"message": "Error inserting data into database"}),
+                    response=json.dumps({"message": "Error inserting data into database", "status": "error"}),
                     status=500,
                     mimetype='application/json'
                 )
@@ -390,7 +390,7 @@ def conversation():
                 conn = mysql.connect(**config)
             except:
                 return app.response_class(
-                    response=json.dumps({"message": "Error connecting to database"}),
+                    response=json.dumps({"message": "Error connecting to database", "status": "error"}),
                     status=500,
                     mimetype='application/json'
                 )
