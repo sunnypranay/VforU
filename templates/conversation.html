@@ -567,6 +567,9 @@ textarea {
                 var p = document.createElement("p");
                 // increase the font size of the response message
                 p.style.fontSize = "20px";
+                // add hyphen to the response message
+                p.style.hyphens = "auto";
+                console.log(data.message);
                 p.innerHTML = data.message;
                 div.appendChild(p);
                 li.appendChild(div);

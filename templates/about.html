@@ -1,0 +1,108 @@
+<html>
+    <head>
+        <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='style/style.css') }}"/>
+        <meta charset="UTF-8">
+        <meta name="'viewpoint" content=""width=device-width, initail-scale="1.0">
+        <title>VForU Login</title>
+
+    </head>
+    <body>
+        <nav class="navbar">
+            <div class="navbar__container">
+                <a href="/" id="navbar__logo">VForU</a>
+                <div class="navbar__toggle" id="mobile-menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+
+                </div>
+                <ul class="navbar__menu">
+                    <li class="navbar__item">
+                        <a href="/" class="navbar__links">Home</a>
+                    </li>
+                    <li class="navbar__item">
+                        <a href="/aboutus" class="navbar__links">About Us</a>
+                    </li>
+                    <li class="navbar__btn">
+                        <a href="/login" class="button">Sign In</a>
+                    </li>
+                    <li class="navbar__btn">
+                        <a href="/register" class="button">Sign Up</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        
+        <div class="services">
+            <h1>Our Team</h1>
+            <div class="main__img--container">
+                
+            </div>
+            <div class="services__container">
+                
+            <div class="row">
+          
+                <div class="column">
+                    <div class="card">
+                        <img src="{{ url_for('static',filename='Images/hari.png') }}" alt="hari" style="width:100%">
+                        <div class="container">
+                            <h2 class="size">HariBharath Mahalingham</h2>
+                            <p class="title">ML/AI Engineer</p>
+                            <a href="https://www.linkedin.com/in/haribharath-mahalingam/" >LinkedIn</a>
+
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="card">
+                    <img src="{{ url_for('static',filename='Images/manjari.jpg') }}" alt="Manjari" style="width:100%">
+                        <div class="container">
+                            <h2 class="size">Manjari Kundam</h2>
+                            <p class="title">Front-End Developer</p>
+                            <a href="https://www.linkedin.com/in/manjari-kundam-18a980173/" >LinkedIn</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="card">
+                      <img src="{{ url_for('static',filename='Images/pranay.png') }}" alt="pranay" style="width:100%">
+                      <div class="container">
+                        <h2 class="size">Pranay Mandadapu</h2>
+                        <p class="title">Back-End Developer</p>
+                        <a href="https://www.linkedin.com/in/sunnypranay/" >LinkedIn</a>
+
+                      </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="card">
+                      <img src="{{ url_for('static',filename='Images/nich.png') }}"alt="Nicholas" style="width:100%">
+                      <div class="container">
+                        <h2 class="size">Nicholas Jolley Marn</h2>
+                        <p class="title">XXXXXXXXX</p>
+                        <a href="https://www.linkedin.com/in/nicholasjmarn" >LinkedIn</a>
+
+                      </div>
+                    </div>
+                </div>
+               
+                <div class="image">
+                    
+                    <img src="{{ url_for('static',filename='Images/team.svg') }}"alt="image" id="main__img"/>
+                 </div>
+                
+        </div>
+        
+        
+
+        <footer class="footer_relative">
+
+            <div class="footer-center">
+                © 2022 Copyright:
+                <a class="text-dark" >VForU.co</a>
+              </div>
+        </footer>
+
+    </body>
+</html>

@@ -441,7 +441,9 @@ def conversation():
             #         mimetype='application/json'
             #     )
             
-            
+@app.route("/aboutus")
+def aboutus():
+    return render_template("about.html")           
 
 
 if __name__ == "__main__":

@@ -22,7 +22,7 @@
                         <a href="/" class="navbar__links">Home</a>
                     </li>
                     <li class="navbar__item">
-                        <a href="/about.html" class="navbar__links">About Us</a>
+                        <a href="/aboutus" class="navbar__links">About Us</a>
                     </li>
                     <li class="navbar__btn">
                         <a href="/login" class="button">Sign In</a>
@@ -69,17 +69,31 @@
         <div class="services">
             <h1>How to Use the application?</h1>
             <div class="services__container">
-                <div class="services__card">
+                <div class="column">
+                    <div class="row">
+                      <div class="card">
+                        <h3 class="text">Step 1</h3>
+                        <p class="text">Create an account with us by going to the Sign Up page.</p>
+                      </div>
+                    </div>
+                    <br></br>
+                    <div class="row">
+                      <div class="card">
+                        <h3 class="text">Step 2</h3>
+                        <p class="text">Login with your new credentials.</p>
+                      </div>
+                    </div>
+                    <br></br>
+                    <div class="row">
+                      <div class="card">
+                        <h3 class="text">Step 3</h3>
+                        <p class="text">Start chatting  until you feel you are okay</p>
+                      </div>
+                    </div>
+                </div>
             
 
-                    <p class="text">The steps are simple, </p>
-                    <p class="text">1.Create an account with us by going to the Sign Up page. </p>
-                    <p class="text">2.Login with your new credentials. </p>
-                    <p class="text">3.Find all the available listeners from the three categories stated above.</p> 
-                    <p class="text">4.Choose the listener you want.</p> 
-                    <p class="text">5.Start chatting with your listener until you feel you are okay.</p> 
 
-                </div>
                 <div class="main__img--container">
                     <img src="{{ url_for('static',filename='Images/steps.svg') }}" alt="image" id="main__img"/>
                 </div>

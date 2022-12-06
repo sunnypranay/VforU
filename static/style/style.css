@@ -384,6 +384,33 @@
     width: 600px;
    padding-right: 5%;
 }
+
+
+  /* Float four columns side by side */
+  .column {
+    float: left;
+    width: 25%;
+    padding: 0 10px;
+  }
+
+  .card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    padding: 16px;
+    text-align: center;
+    background-color: #ff8177;
+  }
+
+  
+  /* Remove extra left and right margins, due to padding */
+  .row {margin: 0 -5px;}
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
 /*
 .services__card {
     margin: 1rem;
@@ -535,6 +562,22 @@ span{
     position: relative
 }
 
+.footer-center { 
+    background: linear-gradient(to right,#ff105f, #ffad06);
+    height: 50px;
+    padding: 20px;
+    text-align: center;
+}
+
+
+.footer_relative {
+    position: relative;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background: linear-gradient(to right,#ff105f, #ffad06);
+    padding: 10px;
+}
 .footer-center { 
     background: linear-gradient(to right,#ff105f, #ffad06);
     height: 50px;
