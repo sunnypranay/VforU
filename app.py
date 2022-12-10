@@ -327,7 +327,7 @@ def login():
 @login_required
 def conversation():
     if request.method == "GET":
-        return render_template("conversation.html")
+        return render_template("conversation-modified.html")
     else:
         # get the current user id from the login session
         # This post method will get a data from front end which a message form the user 

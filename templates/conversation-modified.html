@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<!-- add suport for mobile -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+<!-- <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='style/style.css') }}"/> -->
+<html>
+
+<head>
+
+    <style>
+        body {
+            margin: 0;
+            /* Remove the default margin */
+            font-family: Arial, Helvetica, sans-serif;
+            /* Set the font family to Arial, Helvetica, sans-serif */
+        }
+
+        nav {
+            position: fixed;
+            /* Set the navbar to fixed position */
+            top: 0;
+            /* Position the navbar at the top of the page */
+            width: 100%;
+
+            /* Style the navbar container */
+            display: flex;
+            /* Use flexbox layout to arrange the children horizontally */
+            align-items: center;
+            /* Center the children vertically */
+            height: 50px;
+            /* Set the height of the navbar to 50 pixels */
+            background-color: rgb(0, 0, 0);
+            /* Set the background color to dark gray */
+            color: #fff;
+            /* Set the text color to white */
+            justify-content: space-between;
+        }
+
+        /* Style the name */
+        nav span {
+            margin-left: 10px;
+            /* Add some left margin to the name */
+            font-size: 40px;
+
+            background-image: linear-gradient(to right, #ff0844 0%, #ffb199 100%);
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Style the logout button */
+        nav button {
+            margin-right: 10px;
+            border: none;
+            /* Remove the border */
+            padding: 5px 10px;
+            /* Add some padding to the button */
+            font-size: 20px;
+            /* Set the font size to 16 pixels */
+            float: right;
+
+            background-image: linear-gradient(to right, #ff0844 0%, #ffb199 100%);
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            /* on hover pointer */
+            cursor: pointer;
+
+
+        }
+
+        footer{
+            height: 60px;
+            background: linear-gradient(to right, #ff0844 0%, #ffb199 100%);
+            color: #fff;
+            text-align: center;
+        }
+
+        .container {
+            overflow-y: scroll;
+            height: 80vh;
+            padding: 10px;
+            margin-top: 50px;
+        }
+
+        .dark-mode {
+            background-color: #333;
+            color: #fff;
+        }
+
+
+
+        textarea {
+            width: 90%;
+            height: 60px;
+            margin: 10px;
+        }
+
+        .chat-container {
+            position: relative;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            /* width: 100%; */
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            /* width: 100%; */
+            margin: 10px;
+            z-index: 1;
+        }
+
+        .chat-input {
+            width: 90%;
+            height: 40px;
+            padding: 10px;
+            border: none;
+            border-radius: 20px;
+            outline: none;
+
+        }
+
+        .chat-send-button {
+            width: 10%;
+            height: 40px;
+            padding: 0;
+            margin: 20px;
+            border: none;
+            outline: none;
+            background-color: #0084ff;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 20px;
+        }
+
+
+        .message {
+            width: 40%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 10px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+            clear: both;
+            font-size: 1.5rem;
+            /* position: absolute; */
+        }
+
+
+
+        .sender-message {
+            float: right;
+            color: white;
+            background-color: rgb(59, 135, 247);
+            border-radius: 15px 15px 0 15px;
+        }
+
+        .recipient-message {
+            float: left;
+            color: white;
+            background-color: rgb(59, 59, 61);
+            border-radius: 10px 10px 10px 0;
+        }
+
+        @media (max-width: 600px) {
+            .message {
+                width: 90%;
+                font-size: 1rem;
+            }
+
+            .chat-send-button {
+                width: 20%;
+            }
+
+            .sender-message {
+                float: none;
+                margin-left: auto;
+            }
+
+            .recipient-message {
+                float: none;
+                margin-right: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Create a nav element to hold the navbar content -->
+    <nav>
+        <!-- Add the name to the left side of the navbar -->
+        <span>VforU</span>
+
+        <!-- Add the logout button to the right side of the navbar -->
+        <button onclick="logout()" >Logout</button>
+    </nav>
+
+
+    <div class="Chat-div">
+
+        <div class="container">
+            <div class="message recipient-message">
+                Hi there! I'm VforU, your virtual assistant. How can I help you?
+            </div>
+        </div>
+        <div class="chat-container">
+            <textarea class="chat-input" placeholder="Type message"></textarea>
+            <button class="chat-send-button" onclick="sendData()">
+                <i class="fa fa-paper-plane"></i>
+            </button>
+        </div>
+
+        <div>
+            
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2023 VforU. All rights reserved.</p>
+        <input type="checkbox" id="dark-mode-checkbox">Enable Dark Mode
+    </footer>
+
+
+
+</body>
+
+<script>
+    const darkModeCheckbox = document.getElementById('dark-mode-checkbox');
+    const container = document.querySelector('.container');
+
+    darkModeCheckbox.addEventListener('change', () => {
+        document.body.classList.toggle('dark-mode');
+    });
+
+    function sendData() {
+        var message = document.getElementsByClassName("chat-input")[0].value;
+        var newMessage = document.createElement("div");
+        newMessage.className = "message sender-message";
+        newMessage.innerHTML = message;
+        container.appendChild(newMessage);
+        document.getElementsByClassName("chat-input")[0].value = "";
+
+        // now we have to create a div for the response with typing gif until we get the response from the server
+        var typingGif = document.createElement("img");
+        typingGif.src =
+            "https://retail.curator.interworks.com/plugins/interworks/content/assets/images/dots-loading-animation.gif";
+        typingGif.className = "message recipient-message";
+        // set the height and width of the gif
+        typingGif.style.width = "80px";
+        container.appendChild(typingGif);
+
+        //  send the message to the server using fetch to the url /conversation with post method and send the message as json
+        //  when the server responds, replace the loading gif with the response message
+        //  if the server responds with an error, replace the loading gif with an error message
+
+        fetch('/conversation', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: message
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // replace the loading gif with the response message
+                typingGif.remove();
+                var newMessage = document.createElement("div");
+                newMessage.className = "message recipient-message";
+                newMessage.innerHTML = data.message;
+                container.appendChild(newMessage);
+            })
+            .catch(error => {
+                // replace the loading gif with an error message
+                typingGif.remove();
+                var newMessage = document.createElement("div");
+                newMessage.className = "message recipient-message";
+                newMessage.innerHTML = "Error";
+                container.appendChild(newMessage);
+            });
+        // scroll to the bottom of the container
+        container.scrollTop = container.scrollHeight;
+
+    }
+
+    function logout() {
+        window.location.href = "/logout";
+    }
+
+</script>
+
+</html>
