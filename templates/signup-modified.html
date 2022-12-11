@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+
+<head>
+    <title>My Login Page</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        nav {
+            position: fixed;
+            /* Set the navbar to fixed position */
+            top: 0;
+            /* Position the navbar at the top of the page */
+            width: 100%;
+
+            /* Style the navbar container */
+            display: flex;
+            /* Use flexbox layout to arrange the children horizontally */
+            align-items: center;
+            /* Center the children vertically */
+            height: 50px;
+            /* Set the height of the navbar to 50 pixels */
+            background-color: rgb(0, 0, 0);
+            /* Set the background color to dark gray */
+            color: #fff;
+            /* Set the text color to white */
+            justify-content: space-between;
+        }
+
+        /* Style the name */
+        nav span {
+            margin-left: 10px;
+            /* Add some left margin to the name */
+            font-size: 40px;
+
+            background-image: linear-gradient(to right, #ff0844 0%, #ffb199 100%);
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav button {
+            margin-right: 10px;
+            border: none;
+            /* Remove the border */
+            padding: 5px 10px;
+            /* Add some padding to the button */
+            font-size: 20px;
+            /* Set the font size to 16 pixels */
+            float: right;
+
+            background-image: linear-gradient(to right, #ff0844 0%, #ffb199 100%);
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            /* on hover pointer */
+            cursor: pointer;
+
+
+        }
+
+        .card {
+            background-color: #fafafa;
+            border-radius: 11px;
+            padding: 16px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.301);
+            width: 400px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            height: 50%;
+        }
+
+        body {
+            background-color: #F7F7F7;
+            font-family: "Helvetica Neue", sans-serif;
+        }
+
+        .dark-mode {
+            background-color: #333;
+            color: rgb(0, 0, 0);
+        }
+
+
+
+        footer {
+            height: 80px;
+            background: linear-gradient(to right, #ff0844 0%, #ffb199 100%);
+            color: #fff;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        h1 {
+            font-size: 24px;
+            text-align: center;
+        }
+
+        h1 span {
+            background: linear-gradient(to right, #ff0844 0%, #ffb199 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        form {
+            width: 300px;
+            padding: 20px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* needed  .sign-up div after the form element*/
+        .sign-up {
+            width: 300px;
+            padding: 20px;
+            position: absolute;
+            top: 90%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+        }
+
+        input[type="email"],
+        input[type="password"],
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            -webkit-transition: 0.5s;
+            transition: 0.5s;
+            outline: none;
+            border-radius: 4px;
+        }
+
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            border: 1px solid #555;
+        }
+
+        button[type="submit"] {
+            padding: 12px 20px;
+            /* background-color: #4CAF50; */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button[type="submit"] span {
+            display: inline-block;
+            background-image: url({{ url_for('static', filename='Images/arrow.png')}});
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        width: 30px;
+        height: 30px;
+        vertical-align: middle;
+        /* flip the background image */
+        -webkit-transform: scaleX(-1);
+        }
+
+        /* Mobile - friendly styles */
+        @media screen and (max-width: 600px) {
+            form {
+                width: 90%;
+            }
+
+            .card {
+                width: 90%;
+            }
+        }
+
+        @media screen and (max-width: 400px) {
+            form {
+                width: 80%;
+            }
+
+            .card {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Create a nav element to hold the navbar content -->
+    <nav>
+        <!-- Add the name to the left side of the navbar -->
+        <a href="{{ url_for('index') }}"><button>VForU</button></a>
+        <!-- Add a link to the right side of the navbar -->
+        <a href="{{ url_for('aboutus') }}"><button>About-us</button></a>
+        <a href="{{ url_for('login') }}"><button>Sign-In</button></a>
+        <a href="{{ url_for('register') }}"><button>Sign-Up</button></a>
+
+    </nav>
+
+    <div class="card">
+        <h1>Create account in <span>VForU</span></h1>
+        <form autocomplete="off">
+            <input type="text" placeholder="Name" id="name">
+            <input type="email" placeholder="Email" id="email">
+            <input type="password" placeholder="Password" id="pswd1">
+            <input type="password" placeholder="Confirm Password" id="pswd2" >
+            <button type="submit" onclick="sendData()" value="Sign in">
+                <span></span>
+            </button>
+        </form>
+
+        <!-- Have a link to create an account in VforU  -->
+        <!-- have this link down of the form -->
+        <div class="sign-up">
+            <a href="/login">Have an account in VforU? SignIn here</a>
+            <p id="placeholder" ></p>
+        </div>
+    </div>
+    <footer>
+        <p>© 2023 vforu.co All rights reserved.</p>
+        <input type="checkbox" id="dark-mode-checkbox">Enable Dark Mode
+    </footer>
+</body>
+
+<script>
+    const darkModeCheckbox = document.getElementById('dark-mode-checkbox');
+    if (localStorage.getItem('darkMode') === 'enabled') {
+        document.body.classList.add('dark-mode');
+        darkModeCheckbox.checked = true;
+    }
+    
+    darkModeCheckbox.addEventListener('change', () => {
+        document.body.classList.toggle('dark-mode');
+        let darkMode = 'enabled';
+        if (!darkModeCheckbox.checked) {
+            darkMode = null;
+        }
+        localStorage.setItem('darkMode', darkMode);
+    });
+    function sendData(){
+            event.preventDefault();
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var pswd1 = document.getElementById("pswd1").value;
+            var pswd2 = document.getElementById("pswd2").value;
+            
+                var data = {
+                    "name": name,
+                    "email": email,
+                    "password": pswd1,
+                    "confirm_password": pswd2,
+                    "role": "user",
+                    "category": "Free_Tier"
+                }
+                // use fetch to send data to the server
+                fetch('/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.status == "success"){
+                        alert("Registered Successfully");
+                        window.location.href = "/login";
+                    }
+                    else{
+                        document.getElementById("placeholder").innerHTML = data.message;
+                        document.getElementById("placeholder").style.color = "red";
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+
+</script>
+
+</html>

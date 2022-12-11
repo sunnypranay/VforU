@@ -103,7 +103,7 @@ def logout():
 @app.route("/register", methods = ["GET", "POST"])
 def register():
     if request.method == "GET":
-        return render_template("signup.html")
+        return render_template("signup-modified.html")
     else:
         # This try block is to check if the data we got is in a vaild format or not
         # if the data is not in a valid format then we will send a 400 error and appropriate message
@@ -243,7 +243,7 @@ def login():
     if request.method == "GET":
         if current_user.is_authenticated:
             return redirect(url_for('conversation'))
-        return render_template("login.html")
+        return render_template("login-modified.html")
     else:
         # This try block is to check if the data we got is in a vaild format or not
         # if the data is not in a valid format then we will send a 400 error and appropriate message
@@ -443,7 +443,7 @@ def conversation():
             
 @app.route("/aboutus")
 def aboutus():
-    return render_template("about.html")           
+    return render_template("about-us.html")           
 
 
 if __name__ == "__main__":

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+<head>
+    <style>
+        body {
+            margin: 0px;
+        }
+
+        nav {
+            position: fixed;
+            /* Set the navbar to fixed position */
+            top: 0;
+            /* Position the navbar at the top of the page */
+            width: 100%;
+
+            /* Style the navbar container */
+            display: flex;
+            /* Use flexbox layout to arrange the children horizontally */
+            align-items: center;
+            /* Center the children vertically */
+            height: 50px;
+            /* Set the height of the navbar to 50 pixels */
+            background-color: rgb(0, 0, 0);
+            /* Set the background color to dark gray */
+            color: #fff;
+            /* Set the text color to white */
+            justify-content: space-between;
+
+            z-index: 1;
+        }
+
+        /* Style the name */
+        nav span {
+            /* margin-left: 10px; */
+            /* margin: 10px; */
+            /* Add some left margin to the name */
+            font-size: 40px;
+
+            background-image: linear-gradient(to right, #ff0844 0%, #ffb199 100%);
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav button {
+            margin-right: 10px;
+            border: none;
+            /* Remove the border */
+            padding: 5px 10px;
+            /* Add some padding to the button */
+            font-size: 20px;
+            /* Set the font size to 16 pixels */
+            float: right;
+
+            background-image: linear-gradient(to right, #ff0844 0%, #ffb199 100%);
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            /* on hover pointer */
+            cursor: pointer;
+
+
+        }
+
+        footer {
+            height: 80px;
+            background: linear-gradient(to right, #ff0844 0%, #ffb199 100%);
+            color: #fff;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .dark-mode {
+            background-color: #333;
+            color: rgb(0, 0, 0);
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            width: 400px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 10px;
+            background-color: white;
+            border-radius: 5px;
+            padding: 10px;
+            opacity: 0;
+            transition: opacity 1s linear;
+            position: relative;
+            bottom: -100px;
+        }
+
+        .card.visible {
+            opacity: 1;
+            bottom: 0;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .card img {
+            width: 300px;
+            height: 300px;
+            /* border-radius: 50%; */
+        }
+
+        .team {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+            padding: 10px;
+            margin-top: 40px;
+            margin-bottom: 80px;
+        }
+
+        .member-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .member-role {
+            font-size: 18px;
+            color: gray;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Create a nav element to hold the navbar content -->
+    <nav>
+        <!-- Add the name to the left side of the navbar -->
+        <a href="{{ url_for('index') }}"><button>VForU</button></a>
+        <!-- Add a link to the right side of the navbar -->
+        <a href="{{ url_for('aboutus') }}"><button>About-us</button></a>
+        <a href="{{ url_for('login') }}"><button>Sign-In</button></a>
+        <a href="{{ url_for('register') }}"><button>Sign-Up</button></a>
+
+    </nav>
+
+    <div class="team">
+        <div class="card">
+            <img src="{{ url_for('static',filename='Images/pranay.png') }}" alt="Pranay Mandadapu">
+            <div class="member-name">Pranay Mandadapu</div>
+            <div class="member-role">Back-End Developer & Devops Engineer</div>
+            <div class="member-role"><a href="https://www.linkedin.com/in/pranaymandadapu/" target="_blank">LinkedIn</a>
+            </div>
+        </div>
+        <div class="card">
+            <img src="{{ url_for('static',filename='Images/manjari.jpg') }}" alt="Manjari Kundam">
+            <div class="member-name">Manjari Kundam</div>
+            <div class="member-role">Front-End Developer</div>
+            <div class="member-role"><a href="https://www.linkedin.com/in/manjari-kundam-18a980173/"
+                    target="_blank">LinkedIn</a></div>
+        </div>
+        <div class="card">
+            <img src="{{ url_for('static',filename='Images/hari.png') }}" alt="Hari Bharath Mahalingham">
+            <div class="member-name">Hari Bharath Mahalingham</div>
+            <div class="member-role">ML/AI Engineer</div>
+            <div class="member-role"><a href="https://www.linkedin.com/in/haribharath-mahalingam/"
+                    target="_blank">LinkedIn</a></div>
+        </div>
+        <div class="card">
+            <img src="{{ url_for('static',filename='Images/nich.png') }}" alt="Nicholas Jolley Marn">
+            <div class="member-name">Nicholas Jolley Marn</div>
+            <div class="member-role">Cyber Security</div>
+            <div class="member-role"><a href="https://www.linkedin.com/in/nicholasjmarn" target="_blank">LinkedIn</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2023 vforu.co All rights reserved.</p>
+        <input type="checkbox" id="dark-mode-checkbox">Enable Dark Mode
+    </footer>
+
+</body>
+
+<script>
+    const cards = document.querySelectorAll('.card');
+    const options = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.5
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, options);
+
+    cards.forEach(card => {
+        observer.observe(card);
+    });
+
+
+    const darkModeCheckbox = document.getElementById('dark-mode-checkbox');
+
+    if (localStorage.getItem('darkMode') === 'enabled') {
+        document.body.classList.add('dark-mode');
+        darkModeCheckbox.checked = true;
+    }
+    
+    darkModeCheckbox.addEventListener('change', () => {
+        document.body.classList.toggle('dark-mode');
+        let darkMode = 'enabled';
+        if (!darkModeCheckbox.checked) {
+            darkMode = null;
+        }
+        localStorage.setItem('darkMode', darkMode);
+    });
+
+</script>
+
+</html>

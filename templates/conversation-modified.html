@@ -20,6 +20,7 @@
             position: fixed;
             /* Set the navbar to fixed position */
             top: 0;
+            
             /* Position the navbar at the top of the page */
             width: 100%;
 
@@ -193,7 +194,7 @@
     <!-- Create a nav element to hold the navbar content -->
     <nav>
         <!-- Add the name to the left side of the navbar -->
-        <span>VforU</span>
+        <a href="{{ url_for('index') }}"><button>VForU</button></a>
 
         <!-- Add the logout button to the right side of the navbar -->
         <button onclick="logout()" >Logout</button>
@@ -220,7 +221,7 @@
     </div>
 
     <footer>
-        <p>© 2023 VforU. All rights reserved.</p>
+        <p>© 2023 vforu.co All rights reserved.</p>
         <input type="checkbox" id="dark-mode-checkbox">Enable Dark Mode
     </footer>
 
@@ -230,10 +231,18 @@
 
 <script>
     const darkModeCheckbox = document.getElementById('dark-mode-checkbox');
-    const container = document.querySelector('.container');
-
+    if (localStorage.getItem('darkMode') === 'enabled') {
+        document.body.classList.add('dark-mode');
+        darkModeCheckbox.checked = true;
+    }
+    
     darkModeCheckbox.addEventListener('change', () => {
         document.body.classList.toggle('dark-mode');
+        let darkMode = 'enabled';
+        if (!darkModeCheckbox.checked) {
+            darkMode = null;
+        }
+        localStorage.setItem('darkMode', darkMode);
     });
 
     function sendData() {
