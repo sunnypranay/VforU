@@ -1,2 +1,6 @@
 .env
 vforu.pem
+__pycache__/
+gunicorn.12-11-2022.logs
+gunicorn.error.log
+gunicorn.log
