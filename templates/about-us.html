@@ -90,7 +90,7 @@
             align-items: center;
             justify-content: center;
             margin: 10px;
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.784);
             border-radius: 5px;
             padding: 10px;
             opacity: 0;
@@ -130,11 +130,26 @@
             margin-top: 10px;
         }
 
-        .member-role {
+        .member-role, .member-linkedin {
             font-size: 18px;
             color: gray;
             margin-top: 5px;
         }
+
+        .member-linkedin a {
+            text-decoration: none;
+            color: gray;
+        }
+
+        .member-role{
+            font-size: 18px;
+
+background-image: linear-gradient(to right, #ff0844 0%, #f1a58e 100%);
+
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+        }
+
     </style>
 </head>
 
@@ -156,28 +171,28 @@
             <img src="{{ url_for('static',filename='Images/pranay.png') }}" alt="Pranay Mandadapu">
             <div class="member-name">Pranay Mandadapu</div>
             <div class="member-role">Back-End Developer & Devops Engineer</div>
-            <div class="member-role"><a href="https://www.linkedin.com/in/pranaymandadapu/" target="_blank">LinkedIn</a>
+            <div class="member-linkedin"><a href="https://www.linkedin.com/in/pranaymandadapu/" target="_blank">LinkedIn</a>
             </div>
         </div>
         <div class="card">
             <img src="{{ url_for('static',filename='Images/manjari.jpg') }}" alt="Manjari Kundam">
             <div class="member-name">Manjari Kundam</div>
             <div class="member-role">Front-End Developer</div>
-            <div class="member-role"><a href="https://www.linkedin.com/in/manjari-kundam-18a980173/"
+            <div class="member-linkedin"><a href="https://www.linkedin.com/in/manjari-kundam-18a980173/"
                     target="_blank">LinkedIn</a></div>
         </div>
         <div class="card">
             <img src="{{ url_for('static',filename='Images/hari.png') }}" alt="Hari Bharath Mahalingham">
             <div class="member-name">Hari Bharath Mahalingham</div>
             <div class="member-role">ML/AI Engineer</div>
-            <div class="member-role"><a href="https://www.linkedin.com/in/haribharath-mahalingam/"
+            <div class="member-linkedin"><a href="https://www.linkedin.com/in/haribharath-mahalingam/"
                     target="_blank">LinkedIn</a></div>
         </div>
         <div class="card">
             <img src="{{ url_for('static',filename='Images/nich.png') }}" alt="Nicholas Jolley Marn">
             <div class="member-name">Nicholas Jolley Marn</div>
             <div class="member-role">Cyber Security</div>
-            <div class="member-role"><a href="https://www.linkedin.com/in/nicholasjmarn" target="_blank">LinkedIn</a>
+            <div class="member-linkedin"><a href="https://www.linkedin.com/in/nicholasjmarn" target="_blank">LinkedIn</a>
             </div>
         </div>
     </div>
