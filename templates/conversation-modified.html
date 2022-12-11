@@ -236,6 +236,7 @@
 
 <script>
     const darkModeCheckbox = document.getElementById('dark-mode-checkbox');
+    const container = document.querySelector('.container');
     if (localStorage.getItem('darkMode') === 'enabled') {
         document.body.classList.add('dark-mode');
         darkModeCheckbox.checked = true;

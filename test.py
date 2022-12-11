@@ -8,7 +8,7 @@ import requests
 def registerTest(data, expected, testNumber):
     
     # This is the API endpoint
-    url = "http://127.0.0.1:5000/register/listener"
+    url = "https://vforu.co/register"
 
     # This is the request we will send to the API endpoint
     response = requests.post(url, json=data)
@@ -26,7 +26,7 @@ def registerTest(data, expected, testNumber):
 def loginTest(data, expected, testNumber):
     
     # This is the API endpoint
-    url = "http://127.0.0.1:5000/login"
+    url = "https://vforu.co/login"
 
     # This is the request we will send to the API endpoint
     response = requests.post(url, json=data)
