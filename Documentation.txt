@@ -1,0 +1,7 @@
+This is a Flask application that provides a login and registration page using a MySQL database. The code uses the Flask-Login extension to manage user sessions and authentication. The code also uses the OpenAI API to generate text.
+
+The main application logic is contained in the register and login routes. The register route handles user registration by inserting new user data into the Users table in the MySQL database. It also uses the OpenAI API to generate text. The login route handles user login by querying the Users table for the provided email and password. If a match is found, the user is logged in using the Flask-Login extension.
+
+The User class is a Flask-Login extension that defines the user model. The IndividualUser class is a custom user class that extends the User class and overrides its methods to provide custom authentication and session management using the MySQL database. The get_user function queries the Users table for a user with the provided ID and returns an instance of the IndividualUser class if a match is found.
+
+The user_loader and unauthorized_handler functions are Flask-Login extension hooks that are used to handle user authentication and session management. The user_loader function is called when a user logs in, and it retrieves the user's information from the MySQL database and returns an instance of the IndividualUser class. The unauthorized_handler function is called when a user tries to access a protected route without being logged in, and it redirects the user to the login page.
