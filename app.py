@@ -3,12 +3,14 @@
 # Users table:
 # UserId | Name | Email | Password | Role | Category
 
+import datetime
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_login import UserMixin, LoginManager, login_user, login_required, logout_user, current_user
 import json
 import mysql.connector as mysql
 from decouple import config
 import openai
+from flask import make_response
 
 user = config("user")
 password = config("password")
@@ -446,6 +448,23 @@ def conversation():
 def aboutus():
     return render_template("about-us.html")           
 
+
+# create a route for sitemap.xml
+@app.route('/sitemap.xml', methods=['GET'])
+def sitemap():
+    """Generate sitemap.xml. Makes a list of urls and date modified."""
+    pages=[]
+    ten_days_ago = (datetime.datetime.now() - datetime.timedelta(days=10)).date().isoformat()
+    # static pages
+    for rule in app.url_map.iter_rules():
+        if "GET" in rule.methods and len(rule.arguments)==0:
+            pages.append(
+                [rule.rule, ten_days_ago]
+            )
+    sitemap_xml = render_template('sitemap.xml', pages=pages)
+    response= make_response(sitemap_xml)
+    response.headers["Content-Type"] = "application/xml"    
+    return response
 
 if __name__ == "__main__":
     app.run(debug=True)
