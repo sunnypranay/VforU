@@ -19,7 +19,7 @@ openaiKey = config("OPENAI_KEY")
 
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "secret_key"
+app.config["SECRET_KEY"] = secret_key
 login_manager = LoginManager()
 login_manager.init_app(app)
 
