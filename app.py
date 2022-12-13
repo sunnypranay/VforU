@@ -408,8 +408,8 @@ def conversation():
 
             # In emergency situations use text-davinci-003
             response = openai.Completion.create(
-            model="text-curie-001",
-            # model="text-davinci-003",
+            # model="text-curie-001",
+            model="text-davinci-003",
             prompt=conversation,
             temperature=0.9,
             max_tokens=150,
